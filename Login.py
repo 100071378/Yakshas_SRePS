@@ -12,7 +12,7 @@ def Signup():  # This is the signup definition,
     roots = Tk()  # This creates the window, just a blank one.
     roots.title('SignUp')  # This renames the title of said window to 'signup'
     intruction = Label(roots,
-                       text='Please Enter New Username & Password\n')  # This puts a label, so just a piece of text saying 'please enter blah'
+                       text='Please Enter New Username & Password\n')
     intruction.grid(row=0, column=0,
                     sticky=E)
 
@@ -29,7 +29,7 @@ def Signup():  # This is the signup definition,
     pwordE.grid(row=2, column=1)
 
     signupButton = Button(roots, text='SignUp',
-                          command=FSSignup)  # This creates the button with the text 'signup', when you click it, the command 'fssignup' will run. which is the def
+                          command=FSSignup)  # This creates the button with the text 'signup'
     signupButton.grid(columnspan=2, sticky=W)
     roots.mainloop()  # This just makes the window keep open, we will destroy it soon
 
@@ -39,22 +39,22 @@ def FSSignup():
         f.write(
             nameE.get())  # nameE is the variable we were storing the input to. Tkinter makes us use .get() to get the actual string.
         f.write('\n')  # Splits the line so both variables are on different lines.
-        f.write(pwordE.get())  # Same as nameE just with pword var
+        f.write(pwordE.get()) 
         f.close()  # Closes the file
 
-    roots.destroy()  # This will destroy the signup window. :)
-    Login()  # This will move us onto the login definition :D
+    roots.destroy()  # This will destroy the signup window.
+    Login()  # This will move us onto the login definition
 
 
 def Login():
     global nameEL
-    global pwordEL  # More globals :D
+    global pwordEL  # globals variables
     global rootA
 
     rootA = Tk()  # This now makes a new window.
     rootA.title('Login')  # This makes the window title 'login'
 
-    intruction = Label(rootA, text='Please Login\n')  # More labels to tell us what they do
+    intruction = Label(rootA, text='Please Login\n')
     intruction.grid(sticky=E)
 
     nameL = Label(rootA, text='Username: ')
@@ -72,7 +72,7 @@ def Login():
     loginB.grid(columnspan=2, sticky=W)
 
     rmuser = Button(rootA, text='Delete User', fg='red',
-                    command=DelUser)  # This makes the deluser button. blah go to the deluser def.
+                    command=DelUser)  # This makes the deluser button.
     rmuser.grid(columnspan=2, sticky=W)
     rootA.mainloop()
 
@@ -88,7 +88,7 @@ def CheckLogin():
         r.title(':D')
         r.geometry('150x50')  # Makes the window a certain size
         rlbl = Label(r, text='\n[+] Logged In')  # "logged in" label
-        rlbl.pack()  # Pack is like .grid(), just different
+        rlbl.pack()  # Pack is like .grid()
         r.mainloop()
     else:
         r = Tk()
@@ -107,5 +107,5 @@ def DelUser():
 
 if os.path.isfile(creds):
     Login()
-else:  # This if else statement checks to see if the file exists. If it does it will go to Login, if not it will go to Signup :)
+else:  # This if else statement checks to see if the file exists. If it does it will go to Login, if not it will go to Signup
     Signup()
