@@ -1,8 +1,24 @@
 from Tkinter import *
+import datetime
+import pymysql
 
+mydb = mysql.connector.connect(
+    host = 'localhost'
+    user = 'username'
+    password = 'password'
+)
 root = Tk()
 root.geometry('500x500')
 root.title("SRePS")
+
+def exit():
+    tkinter.messagebox.showinfo("Exit", "Are you sure you want to exit?")
+    exit()
+
+def getdate():
+    date1 = input(datetime.date)
+    return date1
+
 
 label_0 = Label(root, text="Sales Records",width=20,font=("bold", 20))
 label_0.place(x=90,y=53)
@@ -49,7 +65,9 @@ label_4 = Label(root, text="Date and Time",width=20,font=("bold", 10))
 label_4.place(x=85,y=330)
 
 
-Button(root, text='Add Record',width=20,bg='brown',fg='white').place(x=180,y=380)
+but1= Button(root, text='Add Record',width=20,bg='brown',fg='white').place(x=80,y=380)
+but2 = Button(root,width=15,text="Exit",bg='brown',fg='white').place(x=280,y=380)
+
 
 root.mainloop()
 
