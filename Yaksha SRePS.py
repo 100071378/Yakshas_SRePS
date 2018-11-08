@@ -337,6 +337,8 @@ class Dialog(QDialog):
         for currentQTableWidgetItem in self.tableWidget.selectedItems():
             print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
 
+
+
 class DBConnect():
 
     db = pymysql.connect("localhost", "kavi", "kavi", "TestDB")
