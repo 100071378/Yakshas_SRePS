@@ -156,7 +156,7 @@ class Ui_AddSalesRecord(object):
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(370, 280, 51, 31))
         self.pushButton_4.setObjectName("pushButton_4")
-        self.pushButton_4.clicked.connect(self.OpenIns)
+        self.pushButton_4.clicked.connect(self.InsertData)
         AddSalesRecord.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(AddSalesRecord)
         self.statusbar.setObjectName("statusbar")
@@ -166,11 +166,28 @@ class Ui_AddSalesRecord(object):
         QtCore.QMetaObject.connectSlotsByName(AddSalesRecord)
 
 
-    def OpenIns(self):
+
+    def InsertData(self):
         self.iwindow = QMainWindow()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.iwindow)
         self.iwindow.show()
+        # Retrieve text from QLineEdit
+        a = self.lineEdit_2.text()
+        b = self.lineEdit_3.text()
+        c = self.lineEdit_6.text()
+        d = self.lineEdit_4.text()
+        e = self.lineEdit_5.text()
+
+        # Create a empty row at bottom of table
+        numRows = self.tableWidget.rowCount()
+        self.tableWidget.insertRow(numRows)
+        # Add text to the row
+        self.tableWidget.setItem(numRows, 0, QtWidgets.QTableWidgetItem(a))
+        self.tableWidget.setItem(numRows, 1, QtWidgets.QTableWidgetItem(b))
+        self.tableWidget.setItem(numRows, 2, QtWidgets.QTableWidgetItem(c))
+        self.tableWidget.setItem(numRows, 2, QtWidgets.QTableWidgetItem(d))
+        self.tableWidget.setItem(numRows, 2, QtWidgets.QTableWidgetItem(e))
 
     def retranslateUi(self, AddSalesRecord):
         _translate = QtCore.QCoreApplication.translate
