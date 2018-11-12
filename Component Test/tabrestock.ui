@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>655</width>
+    <height>520</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="restocktab">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>627</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <widget class="QWidget" name="verticalTabWidgetPage1">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QGroupBox" name="CompanygroupBox_2">
+        <property name="minimumSize">
+         <size>
+          <width>619</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>Company Details</string>
+        </property>
+        <widget class="QLabel" name="companylabel_5">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>72</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Company : </string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="companylabel_6">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>70</y>
+           <width>73</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Category : </string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_2">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>70</y>
+           <width>116</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>Skin Care</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Eye Drop</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Hygiene Products</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Healthcare</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Medicine</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Intimacy</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Medical Equipment </string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Others</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QComboBox" name="comboBox_3">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>30</y>
+           <width>166</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>Malaysain Pharmaceutical Inc</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>UNipharma FZC Malaysia Bhd</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Eiro Chemo - Pharma</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Borneo Pharmacy Supplies</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>All Health Medical Supplies</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Apex Pharmacy Marketing</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QDateEdit" name="dateEdit">
+         <property name="geometry">
+          <rect>
+           <x>460</x>
+           <y>70</y>
+           <width>110</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+         <property name="date">
+          <date>
+           <year>2018</year>
+           <month>12</month>
+           <day>11</day>
+          </date>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="spinBox">
+         <property name="geometry">
+          <rect>
+           <x>460</x>
+           <y>30</y>
+           <width>42</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>9999</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="companylabel_3">
+         <property name="geometry">
+          <rect>
+           <x>380</x>
+           <y>30</y>
+           <width>71</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Order ID :</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="companylabel_4">
+         <property name="geometry">
+          <rect>
+           <x>400</x>
+           <y>70</y>
+           <width>71</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Date :</string>
+         </property>
+        </widget>
+        <widget class="QTableWidget" name="tableWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>120</y>
+           <width>471</width>
+           <height>55</height>
+          </rect>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="showGrid">
+          <bool>true</bool>
+         </property>
+         <property name="sortingEnabled">
+          <bool>false</bool>
+         </property>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>115</number>
+         </attribute>
+         <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderCascadingSectionResizes">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+         <row>
+          <property name="text">
+           <string/>
+          </property>
+         </row>
+         <column>
+          <property name="text">
+           <string>Cash</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>C.O.D</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Paid Out</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Shipped VIA</string>
+          </property>
+         </column>
+         <item row="0" column="2">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="background">
+           <brush brushstyle="NoBrush">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </property>
+         </item>
+        </widget>
+        <widget class="QTableWidget" name="orderrecomview">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>180</y>
+           <width>611</width>
+           <height>211</height>
+          </rect>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="rowCount">
+          <number>10</number>
+         </property>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <column>
+          <property name="text">
+           <string>Qty</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Stock No.</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Brand</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Unit Price</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Total Price</string>
+          </property>
+         </column>
+        </widget>
+        <widget class="QDialogButtonBox" name="buttonBox">
+         <property name="geometry">
+          <rect>
+           <x>430</x>
+           <y>410</y>
+           <width>161</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="standardButtons">
+          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
