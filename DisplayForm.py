@@ -3,8 +3,8 @@ import datetime
 import pymysql
 
 mydb = mysql.connector.connect(
-    host = 'localhost'
-    user = 'username'
+    host = 'localhost',
+    user = 'username',
     password = 'password'
 )
 root = Tk()
