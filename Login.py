@@ -1,111 +1,156 @@
-from Tkinter import *
-import os
+# -*- coding: utf-8 -*-
+import pymysql
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-creds = 'tempfile.temp'  # This just sets the variable creds to 'tempfile.temp'
+class Ui_MainWindow(object):
+
+    def login(self):
+
+        db = pymysql.connect("localhost", "root", "", "pharmacy")
+        cursor = db.cursor()
+        print('db opened')
+
+        usname = str(self.uname.text())
+        pword = str(self.pword.text())
+
+        sql = """SELECT * FROM user WHERE username = '%s' AND password = '%s'"""
+
+        try:
+            result = cursor.execute(sql % (usname, pword))
+            print('result executed')
+
+            if (result):
+                print('Logged In Successful')
+            else:
+                print('Invalid username or password')
+
+        except:
+            db.rollback()
+            print('db rollback')
+
+        db.close()
+        print('db closed')
+
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(440, 500)
+        MainWindow.setStyleSheet("background-color: rgb(126, 167, 164);")
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+
+        self.logbtn = QtWidgets.QPushButton(self.centralwidget)
+        self.logbtn.setGeometry(QtCore.QRect(90, 400, 81, 31))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        font.setKerning(True)
+        self.logbtn.setFont(font)
+        self.logbtn.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.logbtn.setObjectName("logbtn")
+        self.logbtn.clicked.connect(self.login)
+
+        self.exitbtn = QtWidgets.QPushButton(self.centralwidget)
+        self.exitbtn.setGeometry(QtCore.QRect(265, 400, 81, 31))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.exitbtn.setFont(font)
+        self.exitbtn.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.exitbtn.setObjectName("exitbtn")
+        self.exitbtn.clicked.connect(self.closeapp)
+
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(40, 10, 381, 50))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(100, 60, 250, 215))
+        self.label_2.setText("")
+        self.imagePath = "C:/Users/Hp User/PycharmProjects/New/images/yaksha.jpg"
+        self.image = QtGui.QImage(self.imagePath)
+        self.pixmap = QtGui.QPixmap.fromImage(self.image)
+        self.label_2.setPixmap(self.pixmap)
+        self.label_2.setObjectName("label_2")
+
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(60, 310, 81, 21))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(14)
+        self.label_3.setFont(font)
+        self.label_3.setObjectName("label_3")
+
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(60, 350, 81, 21))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(14)
+        self.label_4.setFont(font)
+        self.label_4.setObjectName("label_4")
+
+        self.uname = QtWidgets.QLineEdit(self.centralwidget)
+        self.uname.setGeometry(QtCore.QRect(185, 310, 185, 20))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        self.uname.setFont(font)
+        self.uname.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.uname.setObjectName("uname")
+
+        self.pword = QtWidgets.QLineEdit(self.centralwidget)
+        self.pword.setGeometry(QtCore.QRect(185, 350, 185, 20))
+        font = QtGui.QFont()
+        font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        self.pword.setFont(font)
+        self.pword.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.pword.setObjectName("pword")
+
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(100, 450, 250, 20))
+        font = QtGui.QFont()
+        font.setUnderline(True)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
 
 
-def Signup():  # This is the signup definition,
-    global pwordE
-    global nameE
-    global roots
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
 
-    roots = Tk()  # This creates the window, just a blank one.
-    roots.title('SignUp')  # This renames the title of said window to 'signup'
-    intruction = Label(roots,
-                       text='Please Enter New Username & Password\n')
-    intruction.grid(row=0, column=0,
-                    sticky=E)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    nameL = Label(roots, text='New Username: ')  # This just does the same as above, instead with the text new username.
-    pwordL = Label(roots, text='New Password: ')
-    nameL.grid(row=1, column=0,
-               sticky=W)
-    pwordL.grid(row=2, column=0, sticky=W)
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "Yaksha SRePs"))
+        self.logbtn.setText(_translate("MainWindow", "Log In"))
+        self.exitbtn.setText(_translate("MainWindow", "Exit"))
+        self.label.setText(_translate("MainWindow", "Please Log In to Yaksha SRePs"))
+        self.label_3.setText(_translate("MainWindow", "Username"))
+        self.label_4.setText(_translate("MainWindow", "Password"))
+        self.label_5.setText(_translate("MainWindow", "Your trusted pharmarcutical sales managin partner"))
 
-    nameE = Entry(roots)  # This now puts a text box waiting for input.
-    pwordE = Entry(roots,
-                   show='*')
-    nameE.grid(row=1, column=1)
-    pwordE.grid(row=2, column=1)
+    def closeapp(self):
+        sys.exit()
 
-    signupButton = Button(roots, text='SignUp',
-                          command=FSSignup)  # This creates the button with the text 'signup'
-    signupButton.grid(columnspan=2, sticky=W)
-    roots.mainloop()  # This just makes the window keep open, we will destroy it soon
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
 
-
-def FSSignup():
-    with open(creds, 'w') as f:  # Creates a document using the variable we made at the top.
-        f.write(
-            nameE.get())  # nameE is the variable we were storing the input to. Tkinter makes us use .get() to get the actual string.
-        f.write('\n')  # Splits the line so both variables are on different lines.
-        f.write(pwordE.get()) 
-        f.close()  # Closes the file
-
-    roots.destroy()  # This will destroy the signup window.
-    Login()  # This will move us onto the login definition
-
-
-def Login():
-    global nameEL
-    global pwordEL  # globals variables
-    global rootA
-
-    rootA = Tk()  # This now makes a new window.
-    rootA.title('Login')  # This makes the window title 'login'
-
-    intruction = Label(rootA, text='Please Login\n')
-    intruction.grid(sticky=E)
-
-    nameL = Label(rootA, text='Username: ')
-    pwordL = Label(rootA, text='Password: ')
-    nameL.grid(row=1, sticky=W)
-    pwordL.grid(row=2, sticky=W)
-
-    nameEL = Entry(rootA)  # The entry input
-    pwordEL = Entry(rootA, show='*')
-    nameEL.grid(row=1, column=1)
-    pwordEL.grid(row=2, column=1)
-
-    loginB = Button(rootA, text='Login',
-                    command=CheckLogin)  # This makes the login button, which will go to the CheckLogin def.
-    loginB.grid(columnspan=2, sticky=W)
-
-    rmuser = Button(rootA, text='Delete User', fg='red',
-                    command=DelUser)  # This makes the deluser button.
-    rmuser.grid(columnspan=2, sticky=W)
-    rootA.mainloop()
-
-
-def CheckLogin():
-    with open(creds) as f:
-        data = f.readlines()  # This takes the entire document we put the info into and puts it into the data variable
-        uname = data[0].rstrip()  # Data[0], 0 is the first line, 1 is the second and so on.
-        pword = data[1].rstrip()  # Using .rstrip() will remove the \n (new line) word from before when we input it
-
-    if nameEL.get() == uname and pwordEL.get() == pword:  # Checks to see if you entered the correct data.
-        r = Tk()  # Opens new window
-        r.title(':D')
-        r.geometry('150x50')  # Makes the window a certain size
-        rlbl = Label(r, text='\n[+] Logged In')  # "logged in" label
-        rlbl.pack()  # Pack is like .grid()
-        r.mainloop()
-    else:
-        r = Tk()
-        r.title('D:')
-        r.geometry('150x50')
-        rlbl = Label(r, text='\n[!] Invalid Login')
-        rlbl.pack()
-        r.mainloop()
-
-
-def DelUser():
-    os.remove(creds)  # Removes the file
-    rootA.destroy()  # Destroys the login window
-    Signup()  # And goes back to the start!
-
-
-if os.path.isfile(creds):
-    Login()
-else:  # This if else statement checks to see if the file exists. If it does it will go to Login, if not it will go to Signup
-    Signup()
