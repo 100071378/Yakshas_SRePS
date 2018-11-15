@@ -8,7 +8,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import MySQLdb as mdb
-from InsertFTable import Ui_MainWindow
+import pymysql
+
 
 class Ui_AddSalesRecord(object):
     def setupUi(self, AddSalesRecord):
@@ -107,6 +108,7 @@ class Ui_AddSalesRecord(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(344, 552, 101, 31))
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.Display)
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(50, 550, 101, 31))
         self.pushButton_2.setObjectName("pushButton_2")
@@ -121,13 +123,15 @@ class Ui_AddSalesRecord(object):
         self.tableWidget.setColumnCount(6)
 
         # changed the row count from 3 to 2 from the initial addsales file
-        self.tableWidget.setRowCount(2)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(1, item)
+        self.tableWidget.setRowCount(0)
+        #item = QtWidgets.QTableWidgetItem()
+        #self.tableWidget.setVerticalHeaderItem(0, item)
+        #item = QtWidgets.QTableWidgetItem()
+        #self.tableWidget.setVerticalHeaderItem(1, item)
         # item = QtWidgets.QTableWidgetItem()
         # self.tableWidget.setVerticalHeaderItem(2, item)
+
+
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -184,18 +188,18 @@ class Ui_AddSalesRecord(object):
             sys.exit()
 
     def InserttoDB(self):
-        RecordID = self.lineEdit.text
+        RecordID = self.lineEdit.text()
         ProductID = [self.tablewidget.item(row, 0).text() for row in range (self.tableWidget.rowCount())]
         ProductDesc = [self.tablewidget.item(row, 1).text() for row in range (self.tableWidget.rowCount())]
         Brand = [self.tablewidget.item(row, 2).text() for row in range (self.tableWidget.rowCount())]
         Quantity = [self.tablewidget.item(row, 3).text() for row in range (self.tableWidget.rowCount())]
         UnitPrice = [self.tablewidget.item(row, 4).text() for row in range (self.tableWidget.rowCount())]
-        Date = self.dateEdit.date()
+        Date = self.dateEdit.text()
 
-        connection = mdb.connect('localhost', 'root', '', 'sreps')
-        with connection:
-                cur = connection.cursor()
-                cur.execute("INSERT INTO records(RecordID, ProductID, ProductDesc, Brand, Quantity, UnitPrice, Date)"
+        con = mdb.connect('localhost', 'root', '', 'sreps')
+        with con:
+                cur = con.cursor()
+                cur.execute("INSERT INTO records(RecordID, ProductID, ProductDesc, Brand, Quantity, UnitPrice)"
                             "VALUES('%S', '%S', '%S', '%S', '%S', '%S', '%S')"%(''.join(RecordID),
                                                                                 ''.join(ProductID),
                                                                                 ''.join(ProductDesc),
@@ -205,6 +209,21 @@ class Ui_AddSalesRecord(object):
                                                                                 ''.join(Date)))
 
 
+    def Display(self):
+        db = mdb.connect("localhost", "root", "", "sreps")
+        cursor = db.cursor()
+        sql = """SELECT * FROM records """
+        cursor.execute(sql)
+        data = cursor.fetchall()
+
+        self.tableWidget.setRowCount(0)
+
+        for row_number, row_data in enumerate(data):
+            self.tableWidget.insertRow(row_number)
+            for column_number, data in enumerate(row_data):
+                self.tableWidget.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
+
+        db.close()
 
     def InserttoTableWidget(self):
         # following lines are necessary if we are going for a separate window
@@ -219,6 +238,7 @@ class Ui_AddSalesRecord(object):
         c = self.lineEdit_6.text()
         d = self.lineEdit_4.text()
         e = self.lineEdit_5.text()
+        f = self.dateEdit.text()
 
         # Create a empty row at bottom of table
         numRows = self.tableWidget.rowCount()
@@ -229,6 +249,7 @@ class Ui_AddSalesRecord(object):
         self.tableWidget.setItem(numRows, 2, QtWidgets.QTableWidgetItem(c))
         self.tableWidget.setItem(numRows, 3, QtWidgets.QTableWidgetItem(d))
         self.tableWidget.setItem(numRows, 4, QtWidgets.QTableWidgetItem(e))
+        self.tableWidget.setItem(numRows, 5, QtWidgets.QTableWidgetItem(f))
 
     def retranslateUi(self, AddSalesRecord):
         _translate = QtCore.QCoreApplication.translate
@@ -245,13 +266,14 @@ class Ui_AddSalesRecord(object):
         self.label_5.setText(_translate("AddSalesRecord", "Unit Price (RM)"))
         self.lineEdit_6.setText(_translate("AddSalesRecord", "Tateyama"))
         self.label_6.setText(_translate("AddSalesRecord", "Brand"))
-        self.pushButton.setText(_translate("AddSalesRecord", "View Product"))
+        self.pushButton.setText(_translate("AddSalesRecord", "View Records"))
         self.pushButton_2.setText(_translate("AddSalesRecord", "Confirm"))
         self.pushButton_3.setText(_translate("AddSalesRecord", "Connect Database"))
-        item = self.tableWidget.verticalHeaderItem(0)
-        item.setText(_translate("AddSalesRecord", "1"))
-        item = self.tableWidget.verticalHeaderItem(1)
-        item.setText(_translate("AddSalesRecord", "2"))
+
+        #item = self.tableWidget.verticalHeaderItem(0)
+        #item.setText(_translate("AddSalesRecord", "1"))
+        #item = self.tableWidget.verticalHeaderItem(1)
+        #item.setText(_translate("AddSalesRecord", "2"))
        # item = self.tableWidget.verticalHeaderItem(2)
        # item.setText(_translate("AddSalesRecord", "3"))
         item = self.tableWidget.horizontalHeaderItem(0)
@@ -271,26 +293,26 @@ class Ui_AddSalesRecord(object):
 
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
-        item = self.tableWidget.item(0, 0)
-        item.setText(_translate("AddSalesRecord", "192"))
-        item = self.tableWidget.item(0, 1)
-        item.setText(_translate("AddSalesRecord", "Skin care"))
-        item = self.tableWidget.item(0, 2)
-        item.setText(_translate("AddSalesRecord", "Actimmune"))
-        item = self.tableWidget.item(0, 3)
-        item.setText(_translate("AddSalesRecord", "12"))
-        item = self.tableWidget.item(0, 4)
-        item.setText(_translate("AddSalesRecord", "13.5"))
-        item = self.tableWidget.item(1, 0)
-        item.setText(_translate("AddSalesRecord", "182"))
-        item = self.tableWidget.item(1, 1)
-        item.setText(_translate("AddSalesRecord", "Hygiene"))
-        item = self.tableWidget.item(1, 2)
-        item.setText(_translate("AddSalesRecord", "Garnier"))
-        item = self.tableWidget.item(1, 3)
-        item.setText(_translate("AddSalesRecord", "55"))
-        item = self.tableWidget.item(1, 4)
-        item.setText(_translate("AddSalesRecord", "25.3"))
+        #item = self.tableWidget.item(0, 0)
+        #item.setText(_translate("AddSalesRecord", "192"))
+        #item = self.tableWidget.item(0, 1)
+        #item.setText(_translate("AddSalesRecord", "Skin care"))
+        #item = self.tableWidget.item(0, 2)
+        #item.setText(_translate("AddSalesRecord", "Actimmune"))
+        #item = self.tableWidget.item(0, 3)
+        #item.setText(_translate("AddSalesRecord", "12"))
+        #item = self.tableWidget.item(0, 4)
+        #item.setText(_translate("AddSalesRecord", "13.5"))
+        #item = self.tableWidget.item(1, 0)
+        #item.setText(_translate("AddSalesRecord", "182"))
+        #item = self.tableWidget.item(1, 1)
+        #item.setText(_translate("AddSalesRecord", "Hygiene"))
+        #item = self.tableWidget.item(1, 2)
+        #item.setText(_translate("AddSalesRecord", "Garnier"))
+        #item = self.tableWidget.item(1, 3)
+        #item.setText(_translate("AddSalesRecord", "55"))
+        #item = self.tableWidget.item(1, 4)
+        #item.setText(_translate("AddSalesRecord", "25.3"))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
         self.pushButton_4.setText(_translate("AddSalesRecord", "ADD"))
 

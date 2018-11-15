@@ -12,7 +12,7 @@ import pymysql
 class Ui_MainWindow(object):
 
     def LoadData(self):
-        db = pymysql.connect("localhost", "kavi", "kavi", "TestDB")
+        db = pymysql.connect("localhost", "root", "", "sreps")
         cursor = db.cursor()
         sql = """SELECT * FROM product """
         cursor.execute(sql)
