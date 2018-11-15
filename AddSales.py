@@ -225,6 +225,12 @@ class Ui_AddSalesRecord(object):
 
         db.close()
 
+    def Delete(self):
+        db = mdb.connect("localhost", "root", "", "sreps")
+        cursor = db.cursor()
+        sql_Delete_query = """Delete from records where RecordID = %s"""
+        cursor.execute(sql_Delete_query)
+
     def InserttoTableWidget(self):
         # following lines are necessary if we are going for a separate window
         # self.iwindow = QtWidgets.QMainWindow()
