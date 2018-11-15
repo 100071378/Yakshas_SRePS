@@ -7,7 +7,6 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import MySQLdb as mdb
 from InsertFTable import Ui_MainWindow
 
 class Ui_AddSalesRecord(object):
@@ -110,24 +109,20 @@ class Ui_AddSalesRecord(object):
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(50, 550, 101, 31))
         self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_2.clicked.connect(self.InserttoDB)
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setGeometry(QtCore.QRect(190, 550, 101, 31))
         self.pushButton_3.setObjectName("pushButton_3")
-        self.pushButton_3.clicked.connect(self.connectDB)
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(20, 330, 441, 191))
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(6)
-
-        # changed the row count from 3 to 2 from the initial addsales file
-        self.tableWidget.setRowCount(2)
+        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setRowCount(3)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(1, item)
-        # item = QtWidgets.QTableWidgetItem()
-        # self.tableWidget.setVerticalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -138,10 +133,6 @@ class Ui_AddSalesRecord(object):
         self.tableWidget.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(4, item)
-
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(5, item)
-
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setItem(0, 0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -165,7 +156,7 @@ class Ui_AddSalesRecord(object):
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(370, 280, 51, 31))
         self.pushButton_4.setObjectName("pushButton_4")
-        self.pushButton_4.clicked.connect(self.InserttoTableWidget)
+        self.pushButton_4.clicked.connect(self.InsertData)
         AddSalesRecord.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(AddSalesRecord)
         self.statusbar.setObjectName("statusbar")
@@ -174,45 +165,13 @@ class Ui_AddSalesRecord(object):
         self.retranslateUi(AddSalesRecord)
         QtCore.QMetaObject.connectSlotsByName(AddSalesRecord)
 
-    def connectDB(self):
-        try:
-            db = mdb.connect('localhost', 'root', '', 'sreps')
-            QtWidgets.QMessageBox.about(self, 'Connection', 'Successfully Connected to DB')
-
-        except mdb.Error as e:
-            QtWidgets.QMessageBox.about(self, 'Connection', 'Not Connected Successfully')
-            sys.exit()
-
-    def InserttoDB(self):
-        RecordID = self.lineEdit.text
-        ProductID = [self.tablewidget.item(row, 0).text() for row in range (self.tableWidget.rowCount())]
-        ProductDesc = [self.tablewidget.item(row, 1).text() for row in range (self.tableWidget.rowCount())]
-        Brand = [self.tablewidget.item(row, 2).text() for row in range (self.tableWidget.rowCount())]
-        Quantity = [self.tablewidget.item(row, 3).text() for row in range (self.tableWidget.rowCount())]
-        UnitPrice = [self.tablewidget.item(row, 4).text() for row in range (self.tableWidget.rowCount())]
-        Date = self.dateEdit.date()
-
-        connection = mdb.connect('localhost', 'root', '', 'sreps')
-        with connection:
-                cur = connection.cursor()
-                cur.execute("INSERT INTO records(RecordID, ProductID, ProductDesc, Brand, Quantity, UnitPrice, Date)"
-                            "VALUES('%S', '%S', '%S', '%S', '%S', '%S', '%S')"%(''.join(RecordID),
-                                                                                ''.join(ProductID),
-                                                                                ''.join(ProductDesc),
-                                                                                ''.join(Brand),
-                                                                                ''.join(Quantity),
-                                                                                ''.join(UnitPrice),
-                                                                                ''.join(Date)))
 
 
-
-    def InserttoTableWidget(self):
-        # following lines are necessary if we are going for a separate window
-        # self.iwindow = QtWidgets.QMainWindow()
-        # self.ui = Ui_MainWindow()
-        # self.ui.setupUi(self.iwindow)
-        # self.iwindow.show()
-
+    def InsertData(self):
+        self.iwindow = QMainWindow()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self.iwindow)
+        self.iwindow.show()
         # Retrieve text from QLineEdit
         a = self.lineEdit_2.text()
         b = self.lineEdit_3.text()
@@ -227,14 +186,14 @@ class Ui_AddSalesRecord(object):
         self.tableWidget.setItem(numRows, 0, QtWidgets.QTableWidgetItem(a))
         self.tableWidget.setItem(numRows, 1, QtWidgets.QTableWidgetItem(b))
         self.tableWidget.setItem(numRows, 2, QtWidgets.QTableWidgetItem(c))
-        self.tableWidget.setItem(numRows, 3, QtWidgets.QTableWidgetItem(d))
-        self.tableWidget.setItem(numRows, 4, QtWidgets.QTableWidgetItem(e))
+        self.tableWidget.setItem(numRows, 2, QtWidgets.QTableWidgetItem(d))
+        self.tableWidget.setItem(numRows, 2, QtWidgets.QTableWidgetItem(e))
 
     def retranslateUi(self, AddSalesRecord):
         _translate = QtCore.QCoreApplication.translate
         AddSalesRecord.setWindowTitle(_translate("AddSalesRecord", "Add Sales Record"))
         self.lineEdit.setText(_translate("AddSalesRecord", "200"))
-        self.label.setText(_translate("AddSalesRecord", "Record ID"))
+        self.label.setText(_translate("AddSalesRecord", "Sales ID"))
         self.lineEdit_2.setText(_translate("AddSalesRecord", "189"))
         self.lineEdit_3.setText(_translate("AddSalesRecord", "Maximus Scelories"))
         self.lineEdit_4.setText(_translate("AddSalesRecord", "15"))
@@ -247,13 +206,13 @@ class Ui_AddSalesRecord(object):
         self.label_6.setText(_translate("AddSalesRecord", "Brand"))
         self.pushButton.setText(_translate("AddSalesRecord", "View Product"))
         self.pushButton_2.setText(_translate("AddSalesRecord", "Confirm"))
-        self.pushButton_3.setText(_translate("AddSalesRecord", "Connect Database"))
+        self.pushButton_3.setText(_translate("AddSalesRecord", "Cancel"))
         item = self.tableWidget.verticalHeaderItem(0)
         item.setText(_translate("AddSalesRecord", "1"))
         item = self.tableWidget.verticalHeaderItem(1)
         item.setText(_translate("AddSalesRecord", "2"))
-       # item = self.tableWidget.verticalHeaderItem(2)
-       # item.setText(_translate("AddSalesRecord", "3"))
+        item = self.tableWidget.verticalHeaderItem(2)
+        item.setText(_translate("AddSalesRecord", "3"))
         item = self.tableWidget.horizontalHeaderItem(0)
         item.setText(_translate("AddSalesRecord", "Product ID"))
         item = self.tableWidget.horizontalHeaderItem(1)
@@ -264,11 +223,6 @@ class Ui_AddSalesRecord(object):
         item.setText(_translate("AddSalesRecord", "Quantity"))
         item = self.tableWidget.horizontalHeaderItem(4)
         item.setText(_translate("AddSalesRecord", "Unit Price"))
-
-        item = self.tableWidget.horizontalHeaderItem(5)
-        item.setText(_translate("AddSalesRecord", "Date"))
-
-
         __sortingEnabled = self.tableWidget.isSortingEnabled()
         self.tableWidget.setSortingEnabled(False)
         item = self.tableWidget.item(0, 0)
